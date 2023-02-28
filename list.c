@@ -40,8 +40,8 @@ bool search(node* head, void * val, int (*cmp)(void *, void *)) {
     return false;
 }
 
-node* remove(node* head, void * val, int (*cmp)(void *, void *)) {
-    if (!list_search(head, val, cmp)) return head;
+node* remove_from_list(node* head, void * val, int (*cmp)(void *, void *)) {
+    if (!search(head, val, cmp)) return head;
     node* it = head;
     node* prev = NULL;
     while (it != NULL) {
@@ -58,7 +58,7 @@ node* remove(node* head, void * val, int (*cmp)(void *, void *)) {
     return head;
 }
 
-void recover(node* head, void (*print)(void *)) {
+void print_list(node* head, void (*print)(void *)) {
     node* it = head;
     while (it != NULL) {
         print(it->val);

@@ -19,7 +19,7 @@ void print_inteiro(void * val){
 }
 
 int main() {
-    node* list = newlist();
+    node* list = new_list();
     int n;
     scanf("%d", &n); 
 
@@ -29,12 +29,12 @@ int main() {
         scanf("%d", &(temp->val));
         list = insert(list, temp);
     }
-    recover(list, print_inteiro);
+    print_list(list, print_inteiro);
     inteiro * temp = (inteiro*)malloc(sizeof(inteiro));
     scanf("%d", &(temp->val));
     if(search(list, temp, cmp)) printf("ta na lista\n");
     else printf("nao ta na lista\n");
     scanf("%d", &(temp->val));
-    list = remove(list, temp, cmp);
-    recover(list, print_inteiro);
+    list = remove_from_list(list, temp, cmp);
+    print_list(list, print_inteiro);
 }
