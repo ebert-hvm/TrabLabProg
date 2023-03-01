@@ -1,42 +1,50 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "list.h"
 
+#define NAME_SIZE 100
+#define CPF_SIZE 20
+
 typedef struct aluno {
-    char nome[100];
-    char cpf[20];
+    char nome[NAME_SIZE];
+    char cpf[CPF_SIZE];
     int codigo;
     node* disciplinas;
 } aluno;
 
 typedef struct disciplina {
-    char* nome[100];
-    char* professor[100];
+    char nome[NAME_SIZE];
+    char professor[NAME_SIZE];
     int codigo;
     int creditos;
     node* alunos;
 } disciplina;
 
-void set_name(char **s, const char *new_name) {
-    strncpy(*s, new_name, sizeof(*s) - 1);
-    (*s)[sizeof(*s) - 1] = '\0'; // Make sure the string is null-terminated
-}
-
-aluno* create_aluno(const char * nome, const char * cpf, const int codigo){
+aluno* create_aluno(const char nome[], const char cpf[], const int codigo){
     aluno* new_aluno = (aluno*)malloc(sizeof(aluno));
-    set_name(&new_aluno->nome, nome);
-    set_name(&new_aluno->cpf, cpf);
+
+    strncpy(new_aluno->nome, nome, strlen(nome));
+    (new_aluno->nome)[strlen(new_aluno->nome)] = '\0';
+    strncpy(new_aluno->cpf, cpf, strlen(nome));
+    (new_aluno->cpf)[strlen(new_aluno->cpf)] = '\0';
+
     new_aluno->codigo = codigo;
     new_aluno->disciplinas = new_list();
+    
     return new_aluno;
 }
 
-disciplina* create_disciplina(const char * nome, const char * professor, const int codigo, const int creditos){
+disciplina* create_disciplina(const char nome[], const char professor[], const int codigo, const int creditos){
     disciplina* new_disciplina = (disciplina*)malloc(sizeof(disciplina));
-    set_name(&new_disciplina->nome, nome);
-    set_name(&new_disciplina->professor, professor);
+    
+    strncpy(new_disciplina->nome, nome, strlen(nome));
+    (new_disciplina->nome)[strlen(new_disciplina->nome)] = '\0';
+    strncpy(new_disciplina->professor, professor, strlen(nome));
+    (new_disciplina->professor)[strlen(new_disciplina->professor)] = '\0';
+
     new_disciplina->codigo = codigo;
     new_disciplina->creditos = creditos;
     new_disciplina->alunos = new_list();
@@ -65,7 +73,6 @@ int cmp_disciplina(void* val1, void* val2) {
 }
 
 void print_aluno(void* val) {
-    
     printf("Aluno: %s\nCódigo: %d\nCPF: %s\n\n",
            ((aluno*)val)->nome,
            ((aluno*)val)->codigo,
@@ -73,7 +80,7 @@ void print_aluno(void* val) {
 }
 
 void print_disciplina(void* val) {
-    printf("Disciplina: %s\nProfessor: %d\nCódigo: %s\n\nCréditos: %s\n\n",
+    printf("Disciplina: %s\nProfessor: %s\nCódigo: %d\nCréditos: %d\n\n",
            ((disciplina*)val)->nome,
            ((disciplina*)val)->professor,
            ((disciplina*)val)->codigo,
@@ -81,7 +88,7 @@ void print_disciplina(void* val) {
 }
 
 aluno* read_aluno(){
-    char nome[100], cpf[20];
+    char nome[NAME_SIZE], cpf[CPF_SIZE];
     int codigo;
     scanf("%[^\n] %[^\n] %d", nome, cpf, &codigo);
     aluno* new_aluno = create_aluno(nome, cpf, codigo);
@@ -89,7 +96,7 @@ aluno* read_aluno(){
 }
 
 disciplina* read_disciplina(){
-    char nome[100], professor[100];
+    char nome[NAME_SIZE], professor[NAME_SIZE];
     int codigo, creditos;
     scanf("%[^\n] %[^\n] %d %d", nome, professor, &codigo, &creditos);
     disciplina* new_disciplina = create_disciplina(nome, professor, codigo, creditos);
@@ -137,5 +144,11 @@ void recuperar(){
 }
 
 int main(){
+    node* aluno_list = new_list();
+    node* disc_list = new_list();
+    aluno_list = insert(aluno_list, create_aluno("Ebo", "123", 21018));
+    disc_list = insert(disc_list, create_disciplina("sisdig", "faccao rotava", 10, 1));;
+    print_list(disc_list, print_disciplina);
+    print_list(aluno_list, print_aluno);
     return 0;
 }
