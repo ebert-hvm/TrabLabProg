@@ -150,5 +150,6 @@ int main(){
     disc_list = insert(disc_list, create_disciplina("sisdig", "faccao rotava", 10, 1));;
     print_list(disc_list, print_disciplina);
     print_list(aluno_list, print_aluno);
+    printf("rotavaballs");
     return 0;
 }
