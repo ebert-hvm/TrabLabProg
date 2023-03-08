@@ -18,6 +18,10 @@ void print_inteiro(void * val){
     printf("%d ", ((inteiro*)val)->val);
 }
 
+void do_nothing(void * val){
+    printf("cock\n");
+}
+
 int main() {
     node* list = new_list();
     int n;
@@ -31,10 +35,10 @@ int main() {
     }
     print_list(list, print_inteiro);
     inteiro * temp = (inteiro*)malloc(sizeof(inteiro));
-    scanf("%d", &(temp->val));
-    if(search(list, temp, cmp)) printf("ta na lista\n");
+    scanf("%d", &n);
+    if(search(list, &n, cmp)) printf("ta na lista\n");
     else printf("nao ta na lista\n");
-    scanf("%d", &(temp->val));
-    list = remove_from_list(list, temp, cmp);
+    scanf("%d", &n);
+    list = remove_from_list(list, &n, cmp, do_nothing);
     print_list(list, print_inteiro);
 }
