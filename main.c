@@ -27,9 +27,9 @@ aluno* create_aluno(const char nome[], const char cpf[], const int codigo){
     aluno* new_aluno = (aluno*)malloc(sizeof(aluno));
 
     strncpy(new_aluno->nome, nome, strlen(nome));
-    (new_aluno->nome)[strlen(new_aluno->nome)] = '\0';
+    (new_aluno->nome)[strlen(nome)] = '\0';
     strncpy(new_aluno->cpf, cpf, strlen(nome));
-    (new_aluno->cpf)[strlen(new_aluno->cpf)] = '\0';
+    (new_aluno->cpf)[strlen(cpf)] = '\0';
 
     new_aluno->codigo = codigo;
     new_aluno->disciplinas = new_list();
@@ -41,9 +41,9 @@ disciplina* create_disciplina(const char nome[], const char professor[], const i
     disciplina* new_disciplina = (disciplina*)malloc(sizeof(disciplina));
     
     strncpy(new_disciplina->nome, nome, strlen(nome));
-    (new_disciplina->nome)[strlen(new_disciplina->nome)] = '\0';
-    strncpy(new_disciplina->professor, professor, strlen(nome));
-    (new_disciplina->professor)[strlen(new_disciplina->professor)] = '\0';
+    (new_disciplina->nome)[strlen(nome)] = '\0';
+    strncpy(new_disciplina->professor, professor, strlen(professor));
+    (new_disciplina->professor)[strlen(professor)] = '\0';
 
     new_disciplina->codigo = codigo;
     new_disciplina->creditos = creditos;
@@ -73,14 +73,14 @@ int cmp_disciplina(void* val1, void* val2) {
 }
 
 void print_aluno(void* val) {
-    printf("Aluno: %s\nCódigo: %d\nCPF: %s\n\n",
+    printf("Aluno: %s\nCodigo: %d\nCPF: %s\n\n",
            ((aluno*)val)->nome,
            ((aluno*)val)->codigo,
            ((aluno*)val)->cpf);
 }
 
 void print_disciplina(void* val) {
-    printf("Disciplina: %s\nProfessor: %s\nCódigo: %d\nCréditos: %d\n\n",
+    printf("Disciplina: %s\nProfessor: %s\nCodigo: %d\nCreditos: %d\n\n",
            ((disciplina*)val)->nome,
            ((disciplina*)val)->professor,
            ((disciplina*)val)->codigo,
@@ -147,9 +147,11 @@ int main(){
     node* aluno_list = new_list();
     node* disc_list = new_list();
     aluno_list = insert(aluno_list, create_aluno("Ebo", "123", 21018));
-    disc_list = insert(disc_list, create_disciplina("sisdig", "faccao rotava", 10, 1));;
+    disc_list = insert(disc_list, create_disciplina("sisdig", "faccao rotava", 10, 1));
     print_list(disc_list, print_disciplina);
     print_list(aluno_list, print_aluno);
     printf("rotavaballs");
+    free(aluno_list);
+    free(disc_list);
     return 0;
 }

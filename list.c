@@ -11,10 +11,10 @@ static node* create_node(void * val) {
     return new_node;
 }
 
-static void remove_node(node* nd) {
-    nd->next = NULL;
+//Freeing the node does not free its contents. A specific free funtion wil be needed for each of the node types (aluno, disciplina)
+static void free_node(node* nd) {
+    free(nd->next);
     free(nd);
-    nd = NULL;
 }
 
 node* new_list(){
@@ -47,7 +47,7 @@ node* remove_from_list(node* head, void * val, int (*cmp)(void *, void *)) {
     while (it != NULL) {
         if(!cmp(it->val, val)){
             node* next = it->next;
-            remove_node(it);
+            free_node(it);
             if (prev == NULL) head = next;
             else prev->next = next;
             break;
