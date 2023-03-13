@@ -1,9 +1,15 @@
+#pragma region Header
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "list.h"
+
+#pragma endregion
+
+#pragma region Definitions
 
 #define NAME_SIZE 100
 #define CPF_SIZE 20
@@ -22,6 +28,10 @@ typedef struct disciplina {
     int creditos;
     node* alunos;
 } disciplina;
+
+#pragma endregion
+
+#pragma region EBFunctions
 
 aluno* create_aluno(const char nome[], const char cpf[], const int codigo){
     aluno* new_aluno = (aluno*)malloc(sizeof(aluno));
@@ -85,6 +95,8 @@ void print_disciplina(void* val) {
            ((disciplina*)val)->creditos);
 }
 
+#pragma endregion
+
 aluno* read_aluno(){
     char nome[NAME_SIZE], cpf[CPF_SIZE];
     int codigo;
@@ -100,6 +112,8 @@ disciplina* read_disciplina(){
     disciplina* new_disciplina = create_disciplina(nome, professor, codigo, creditos);
     return new_disciplina;
 }
+
+#pragma region BIGFunctions
 
 void cadastrar_aluno(){
 
@@ -165,23 +179,130 @@ void free_aluno_contents(void* alu){
     free(Aluno);
 }
 
+#pragma endregion
+
+#pragma region AreaFunctions
+void handle_area_de_alunos(){
+    int choice;
+    while (1){
+        printf("SISTEMA DE MATRICULAS --- AREA DE ALUNOS\n\n"
+               "O que voce deseja fazer?\n"
+               "  1-??\n"
+               "  2-??\n"
+               "  0-Retornar ao menu principal\n\n"
+               "Escolha: "
+        );
+        while (scanf("%d", &choice) != 1){
+            printf("Escolha Invalida! Apenas numeros inteiros sao aceitos\n\n");
+            printf("Escolha: ");
+            fflush(stdin);
+        }
+        fflush(stdin);
+
+        switch (choice){
+            case 0:
+                return;
+            case 1:
+                printf("faz ai");
+                break;
+            case 2:
+                printf("faz ai");
+                break;
+            default:
+                printf("Nao ha opcoes correspondentes a sua escolha\n\n");
+                break;
+        }
+    }
+}
+
+void handle_area_de_disciplinas(){
+    int choice;
+    while (1){
+        printf("SISTEMA DE MATRICULAS --- AREA DE DISCIPLINAS\n\n"
+               "O que voce deseja fazer?\n"
+               "  1-??\n"
+               "  2-??\n"
+               "  0-Retornar ao menu principal\n\n"
+               "Escolha: "
+        );
+        while (scanf("%d", &choice) != 1){
+            printf("Escolha Invalida! Apenas numeros inteiros sao aceitos\n\n");
+            printf("Escolha: ");
+            fflush(stdin);
+        }
+        fflush(stdin);
+
+        switch (choice){
+            case 0:
+                return;
+            case 1:
+                printf("faz ai");
+                break;
+            case 2:
+                printf("faz ai");
+                break;
+            default:
+                printf("Nao ha opcoes correspondentes a sua escolha\n\n");
+                break;
+        }
+    }
+}
+#pragma endregion
+
 int main(){
-    node* aluno_list = new_list();
-    node* disc_list = new_list();
-    aluno_list = insert(aluno_list, create_aluno("Ebo", "123", 21018));
-    aluno_list = insert(aluno_list, create_aluno("Biggers", "456", 21023));
-    disc_list = insert(disc_list, create_disciplina("sisdig", "faccao rotava", 10, 1));
-    disc_list = insert(disc_list, create_disciplina("matdisc", "velento", 1024, 0));
-    print_list(disc_list, print_disciplina);
-    print_list(aluno_list, print_aluno);
-    disc_list = remove_from_list(disc_list, create_disciplina("matdisc", "velento", 1024, 0), cmp_disciplina, free_disciplina_contents);
-    printf("ROTAVABALLS\n\n");
-    aluno_list = remove_from_list(aluno_list, create_aluno("Biggers", "456", 21023), cmp_aluno, free_aluno_contents);
-    print_list(disc_list, print_disciplina);
-    print_list(aluno_list, print_aluno);
-    printf("rotavaballs");
+    #pragma region Test
+    // node* aluno_list = new_list();
+    // node* disc_list = new_list();
+    // aluno_list = insert(aluno_list, create_aluno("Ebo", "123", 21018));
+    // aluno_list = insert(aluno_list, create_aluno("Biggers", "456", 21023));
+    // disc_list = insert(disc_list, create_disciplina("sisdig", "faccao rotava", 10, 1));
+    // disc_list = insert(disc_list, create_disciplina("matdisc", "velento", 1024, 0));
 
-
+    // print_list(disc_list, print_disciplina);
+    // print_list(aluno_list, print_aluno);
     
+    // printf("ROTAVABALLS\n\n");
+
+    // disc_list = remove_from_list(disc_list, create_disciplina("matdisc", "velento", 1024, 0), cmp_disciplina, free_disciplina_contents);
+    // aluno_list = remove_from_list(aluno_list, create_aluno("Biggers", "456", 21023), cmp_aluno, free_aluno_contents);
+    // print_list(disc_list, print_disciplina);
+    // print_list(aluno_list, print_aluno);
+
+    // printf("rotavaballs");
+    #pragma endregion
+    
+    int choice;
+
+    while (1){
+        printf("SISTEMA DE MATRICULAS --- MENU PRINCIPAL\n\n"
+           "O que voce deseja fazer?\n"
+           "  1-Area de alunos\n"
+           "  2-Area de disciplinas\n"
+           "  0-Sair\n\n"
+           "Escolha: ");
+        while (scanf("%d", &choice) != 1){
+            printf("Escolha Invalida! Apenas numeros inteiros sao aceitos\n\n");
+            printf("Escolha: ");
+            fflush(stdin);
+        }
+        fflush(stdin);
+
+        switch (choice){
+            case 0:
+                return 0;
+            case 1:
+                handle_area_de_alunos();
+                break;
+            case 2:
+                handle_area_de_disciplinas();
+                break;
+            default:
+                printf("Nao ha opcoes correspondentes a sua escolha\n\n");
+                break;
+        }
+    }
+
+
+
     return 0;
 }
