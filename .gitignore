@@ -1,3 +1,6 @@
 *.exe
 *.o
 *.sh
+inteiro.c
+test*
+.vscode

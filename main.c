@@ -51,17 +51,15 @@ disciplina* create_disciplina(const char nome[], const char professor[], const i
     return new_disciplina;
 }
 
-// retorna 0 se for igual e 1 for diferente
 int cmp_aluno(void* val1, void* val2) {
     if (((aluno*)val1)->codigo == ((aluno*)val2)->codigo &&
-        ((aluno*)val1)->cpf == ((aluno*)val2)->cpf &&
+        !strcmp(((aluno*)val1)->cpf, ((aluno*)val1)->cpf) &&
         !strcmp(((aluno*)val1)->nome, ((aluno*)val1)->nome)) {
         return 0;
     } else
         return 1;
 }
 
-// retorna 0 se for igual e 1 for diferente
 int cmp_disciplina(void* val1, void* val2) {
     if (((disciplina*)val1)->codigo == ((disciplina*)val2)->codigo &&
         ((disciplina*)val1)->creditos == ((disciplina*)val2)->creditos &&
@@ -143,15 +141,47 @@ void recuperar(){
     
 }
 
+void free_disciplina_contents(void* disc){
+    disciplina* Disciplina = (disciplina*) ((node*) disc)->val;
+    node* it = Disciplina->alunos;
+    node* prev = NULL;
+    while (it != NULL){
+        prev = it;
+        it = it->next;
+        free(prev);
+    }
+    free(Disciplina);
+}
+
+void free_aluno_contents(void* alu){
+    aluno* Aluno = (aluno*) ((node*) alu)->val;
+    node* it = Aluno->disciplinas;
+    node* prev = NULL;
+    while (it != NULL){
+        prev = it;
+        it = it->next;
+        free(prev);
+    }
+    free(Aluno);
+}
+
 int main(){
     node* aluno_list = new_list();
     node* disc_list = new_list();
     aluno_list = insert(aluno_list, create_aluno("Ebo", "123", 21018));
+    aluno_list = insert(aluno_list, create_aluno("Biggers", "456", 21023));
     disc_list = insert(disc_list, create_disciplina("sisdig", "faccao rotava", 10, 1));
+    disc_list = insert(disc_list, create_disciplina("matdisc", "velento", 1024, 0));
+    print_list(disc_list, print_disciplina);
+    print_list(aluno_list, print_aluno);
+    disc_list = remove_from_list(disc_list, create_disciplina("matdisc", "velento", 1024, 0), cmp_disciplina, free_disciplina_contents);
+    printf("ROTAVABALLS\n\n");
+    aluno_list = remove_from_list(aluno_list, create_aluno("Biggers", "456", 21023), cmp_aluno, free_aluno_contents);
     print_list(disc_list, print_disciplina);
     print_list(aluno_list, print_aluno);
     printf("rotavaballs");
-    free(aluno_list);
-    free(disc_list);
+
+
+    
     return 0;
 }
