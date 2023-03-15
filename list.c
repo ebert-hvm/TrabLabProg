@@ -46,7 +46,7 @@ node* remove_from_list(node* head, void * val, int (*cmp)(void *, void *), void 
     while (it != NULL) {
         if(!cmp(it->val, val)){
             node* next = it->next;
-            free_node_contents(it);
+            free_node_contents(it->val);
             free_node(it);
             if (prev == NULL) head = next;
             else prev->next = next;
